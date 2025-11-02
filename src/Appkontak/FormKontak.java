@@ -131,6 +131,30 @@ public class FormKontak extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Gagal update: " + e.getMessage());
         }
     }
+    
+    private void hapusData() {
+        int baris = tableKontak.getSelectedRow();
+        if (baris == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih data yang ingin dihapus!");
+            return;
+        }
+
+        int id = (int) model.getValueAt(baris, 0);
+        int konfirmasi = JOptionPane.showConfirmDialog(this, "Yakin ingin menghapus?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        if (konfirmasi == JOptionPane.YES_OPTION) {
+            try {
+                String sql = "DELETE FROM kontak WHERE id=?";
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setInt(1, id);
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Data berhasil dihapus!");
+                loadData("");
+                resetForm();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Gagal hapus: " + e.getMessage());
+            }
+        }
+    }
 
         
         
