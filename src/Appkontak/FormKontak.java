@@ -175,6 +175,34 @@ public class FormKontak extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Gagal ekspor: " + e.getMessage());
         }
     }
+    
+    private void importCSV() {
+        JFileChooser chooser = new JFileChooser();
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    String[] data = line.split(",");
+                    if (data.length == 3) {
+                        String sql = "INSERT INTO kontak (nama, nomor, kategori) VALUES (?, ?, ?)";
+                        PreparedStatement ps = conn.prepareStatement(sql);
+                        ps.setString(1, data[0]);
+                        ps.setString(2, data[1]);
+                        ps.setString(3, data[2]);
+                        ps.executeUpdate();
+                    }
+                }
+                JOptionPane.showMessageDialog(this, "Import CSV selesai!");
+                loadData("");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Gagal import: " + e.getMessage());
+            }
+        }
+    }
+
+    
+    
 
         
         
