@@ -20,9 +20,31 @@ public class FormKontak extends javax.swing.JFrame {
     /**
      * Creates new form FormKontak
      */
+    
+     Connection conn;
+    DefaultTableModel model;
+    
     public FormKontak() {
         initComponents();
+        
+         initComponents();
+        conn = Database.getConnection();
+        model = new DefaultTableModel(new String[]{"ID", "Nama", "Nomor", "Kategori"}, 0);
+        tableKontak.setModel(model);
+        loadData("");
+        
+         btnTambah.addActionListener(e -> tambahData());
+        btnEdit.addActionListener(e -> editData());
+        btnHapus.addActionListener(e -> hapusData());
+        btnCari.addActionListener(e -> cariData());
+        btnExportCSV.addActionListener(e -> exportCSV());
+        btnImportCSV.addActionListener(e -> importCSV());
+        
+        tableKontak.getSelectionModel().addListSelectionListener(e -> isiFormDariTabel());
     }
+        
+        
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
