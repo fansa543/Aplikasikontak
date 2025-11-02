@@ -98,6 +98,40 @@ public class FormKontak extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Gagal menambah data: " + e.getMessage());
         }
     }
+    
+    private void editData() {
+        int baris = tableKontak.getSelectedRow();
+        if (baris == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih data yang ingin diedit!");
+            return;
+        }
+
+        int id = (int) model.getValueAt(baris, 0);
+        String nama = txtNama.getText().trim();
+        String nomor = txtNomor.getText().trim();
+        String kategori = cbKategori.getSelectedItem().toString();
+
+        if (!nomor.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Nomor telepon hanya boleh angka!");
+            return;
+        }
+
+        try {
+            String sql = "UPDATE kontak SET nama=?, nomor=?, kategori=? WHERE id=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, nama);
+            ps.setString(2, nomor);
+            ps.setString(3, kategori);
+            ps.setInt(4, id);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Data berhasil diupdate!");
+            loadData("");
+            resetForm();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Gagal update: " + e.getMessage());
+        }
+    }
+
         
         
     
