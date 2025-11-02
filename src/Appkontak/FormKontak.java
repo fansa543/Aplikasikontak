@@ -42,6 +42,27 @@ public class FormKontak extends javax.swing.JFrame {
         
         tableKontak.getSelectionModel().addListSelectionListener(e -> isiFormDariTabel());
     }
+    
+    private void loadData(String filter) {
+        model.setRowCount(0);
+        try (Statement st = conn.createStatement()) {
+            String sql = "SELECT * FROM kontak";
+            if (!filter.isEmpty()) {
+                sql += " WHERE nama LIKE '%" + filter + "%' OR nomor LIKE '%" + filter + "%'";
+            }
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getInt("id"),
+                    rs.getString("nama"),
+                    rs.getString("nomor"),
+                    rs.getString("kategori")
+                });
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Gagal memuat data: " + e.getMessage());
+        }
+    }
         
         
     
