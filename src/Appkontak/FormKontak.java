@@ -200,6 +200,15 @@ public class FormKontak extends javax.swing.JFrame {
             }
         }
     }
+    
+    private void isiFormDariTabel() {
+        int baris = tableKontak.getSelectedRow();
+        if (baris != -1) {
+            txtNama.setText(model.getValueAt(baris, 1).toString());
+            txtNomor.setText(model.getValueAt(baris, 2).toString());
+            cbKategori.setSelectedItem(model.getValueAt(baris, 3).toString());
+        }
+    }
 
     
     
