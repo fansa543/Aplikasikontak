@@ -63,6 +63,41 @@ public class FormKontak extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Gagal memuat data: " + e.getMessage());
         }
     }
+    
+    private void tambahData() {
+        String nama = txtNama.getText().trim();
+        String nomor = txtNomor.getText().trim();
+        String kategori = cbKategori.getSelectedItem().toString();
+
+        if (nama.isEmpty() || nomor.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nama dan Nomor wajib diisi!");
+            return;
+        }
+
+        if (!nomor.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Nomor telepon hanya boleh angka!");
+            return;
+        }
+
+        if (nomor.length() < 8 || nomor.length() > 15) {
+            JOptionPane.showMessageDialog(this, "Nomor telepon harus 8–15 digit!");
+            return;
+        }
+
+        try {
+            String sql = "INSERT INTO kontak (nama, nomor, kategori) VALUES (?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, nama);
+            ps.setString(2, nomor);
+            ps.setString(3, kategori);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan!");
+            loadData("");
+            resetForm();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Gagal menambah data: " + e.getMessage());
+        }
+    }
         
         
     
