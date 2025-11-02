@@ -209,6 +209,13 @@ public class FormKontak extends javax.swing.JFrame {
             cbKategori.setSelectedItem(model.getValueAt(baris, 3).toString());
         }
     }
+    
+    private void resetForm() {
+        txtNama.setText("");
+        txtNomor.setText("");
+        cbKategori.setSelectedIndex(0);
+        tableKontak.clearSelection();
+    }
 
     
     
