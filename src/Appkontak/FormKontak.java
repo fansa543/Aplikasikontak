@@ -162,6 +162,19 @@ public class FormKontak extends javax.swing.JFrame {
             loadData(keyword.trim());
         }
     }
+    
+    private void exportCSV() {
+        try (FileWriter fw = new FileWriter("kontak_export.csv")) {
+            for (int i = 0; i < model.getRowCount(); i++) {
+                fw.write(model.getValueAt(i, 1) + "," +
+                         model.getValueAt(i, 2) + "," +
+                         model.getValueAt(i, 3) + "\n");
+            }
+            JOptionPane.showMessageDialog(this, "Data berhasil diekspor ke kontak_export.csv");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Gagal ekspor: " + e.getMessage());
+        }
+    }
 
         
         
