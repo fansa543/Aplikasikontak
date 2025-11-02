@@ -155,6 +155,13 @@ public class FormKontak extends javax.swing.JFrame {
             }
         }
     }
+    
+    private void cariData() {
+        String keyword = JOptionPane.showInputDialog(this, "Masukkan nama atau nomor untuk mencari:");
+        if (keyword != null) {
+            loadData(keyword.trim());
+        }
+    }
 
         
         
