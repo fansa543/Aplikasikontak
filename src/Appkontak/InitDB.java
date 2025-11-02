@@ -25,7 +25,6 @@ public class InitDB {
             st.execute(sql);
             System.out.println("Tabel kontak siap digunakan!");
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
